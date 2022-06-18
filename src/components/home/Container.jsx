@@ -22,7 +22,6 @@ export default function BasicGrid() {
   let insideCart = useSelector( state => state.company.insideCart)
   let isLoading = useSelector( state => state.company.isLoading)
 
-  let groupedProduct = groupProductByCategory(productToShow)
 
   productToShow.map(getArrayValues);
 

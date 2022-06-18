@@ -1,8 +1,11 @@
 import { ADD_FAVOURITE, SET_INSIDE_CART, SET_IS_CART_FILLED, SET_IS_LOADING, SET_PRODUCT_BY_CATEGORY, SET_PRODUCT_TO_SHOW, SET_SEARCH_RESULT, SET_TOTAL_PRICE_IN_CART, SET_CUSTOMER_INFO, SET_ORDER_BY_TYPE, SET_COOKIE, SET_LIST_CATEGORY, SET_COMPLETE_PRODUCT, SET_CART_STEP, ORDER_DETAIL } from '../actionTypes'
 import Cookies from 'universal-cookie';
+import { integerToRupiah } from '../../helpers/Function'
 const cookies = new Cookies();
 
-const BASE_URI = process.env.REACT_APP_BASE_URI
+const BASE_URI_SPRING = process.env.REACT_APP_BASE_URI_SPRING
+const BASE_URI_RAILS = process.env.REACT_APP_BASE_URI_RAILS
+const BASE_URI = BASE_URI_RAILS
 
 export function addToFavourite(input) {
   return {
@@ -111,7 +114,7 @@ export function setCartStep(input) {
 
 export function fetchAllProducts() {
   return ((dispatch) => {
-    let url = `${BASE_URI}/products`
+    let url = `${BASE_URI_SPRING}/products`
 
     let requestOptions = {
       method: 'GET',
@@ -123,6 +126,9 @@ export function fetchAllProducts() {
     fetch(url, requestOptions)
       .then(response => response.json())
       .then(result => {
+        result.forEach(el => {
+          el.price = integerToRupiah(el.price);
+        });
         dispatch(setProductToShow(result))
         dispatch(setCompleteProduct(result))
       })
@@ -153,7 +159,7 @@ export function fetchProductsAndCategory() {
 
 export function fetchListCategories() {
   return ((dispatch) => {
-    let url = `${BASE_URI}/categories`
+    let url = `${BASE_URI_SPRING}/categories`
 
     let requestOptions = {
       method: 'GET',
