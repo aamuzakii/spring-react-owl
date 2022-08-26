@@ -248,7 +248,7 @@ function ProfileChip() {
   return (
     <>
       {
-        profileData && token ? <img src={profileData.imageUrl} width="27" style={{ borderRadius: 25 }} />
+        profileData && token ? <img src={profileData.imageUrl} referrerPolicy="no-referrer" width="27" style={{ borderRadius: 25 }} />
                              : <AccountCircle />
       }
     </>
